@@ -1,0 +1,105 @@
+Opdracht 36
+SELECT COUNT(*) FROM Verkooporders
+WHERE orderdat BETWEEN '2012-01-01' AND '2012-06-01';
+
+Opdracht 37
+SELECT SUM(orderbedrag) AS VerkoopInJan2012 FROM Verkooporders; 
+
+Opdracht 38
+SELECT concat('€', format(SUM(orderbedrag), 2, 'nl_NL')) AS VerkoopInJan2012 FROM Verkooporders; 
+
+Opdracht 39
+SELECT concat('€' , format(AVG(orderbedrag), 2 , 'de_DE')) AS GemiddeldeVerkoop2011 FROM Verkooporders
+WHERE orderdat BETWEEN '2011-01-01' AND '2011-12-31';
+
+Opdracht 40
+SELECT ROUND(AVG(provisiep), 2) AS gemiddeldprovisiepercentage
+FROM medewerkers
+WHERE functie IN ('Vertegenwoordiger', 'Verkoper')
+AND basissalaris >= 45000;
+
+Opdracht 41
+SELECT SUM(basissalaris + (basissalaris * provisiep / 100)) AS TotaalSalarisMetProvisies FROM Medewerkers 
+
+Opdracht 42
+SELECT concat('€', format(SUM(basissalaris + (basissalaris * provisiep / 100)),2, 'de_DE')) AS TotaalSalarisMetProvisies 
+FROM Medewerkers
+WHERE basissalaris > 45000;
+
+Opdracht 43
+SELECT functie, COUNT(*), MIN(basissalaris) AS MinSalaris,
+MAX(basissalaris) AS MaxSalaris
+FROM Medewerkers 
+GROUP BY functie
+ORDER BY 3;
+
+Opdracht 44
+SELECT plaats
+FROM Klanten
+GROUP BY plaats;
+
+OPDRACHT 45
+
+SELECT klantnr, COUNT(ordernr) AS aantalverkooporders
+FROM verkooporders
+WHERE (Verkooporders.orderdat) between '2012-01-01' and '2012-07-01'
+GROUP BY klantnr
+
+
+OPPDRACHT 46
+
+SELECT klantnr, FORMAT(SUM(orderbedrag), 2) AS totaal_orderbedrag
+FROM verkooporders
+WHERE (Verkooporders.orderdat) between '2012-01-01' and '2012-07-01'
+GROUP BY klantnr
+ORDER BY klantnr asc
+
+
+OPPDRACHT 47
+
+
+SELECT plaats, COUNT(plaats) as aantal
+FROM medewerkers
+WHERE plaats = 'Gouda'
+
+
+OPPDRACHT 48
+
+
+SELECT productnr, SUM(aantal) AS aantalVerkocht
+FROM orderregels
+GROUP BY productnr
+
+
+OPPDRACHT 49
+
+SELECT productsoort, SUM(voorraad * prijs) AS voorraadwaarde
+FROM producten
+GROUP BY productsoort
+
+
+OPPDRACHT 50
+
+SELECT mednr, SUM(orderbedrag) as totaalVerkocht
+from verkooporders
+WHERE YEAR(orderdat) = 2012
+group by mednr
+ORDER BY totaalVerkocht DESC
+
+
+OPPDRACHT 51
+
+
+SELECT productnr, SUM(aantal) AS aantalVerkocht
+FROM orderregels
+GROUP BY productnr
+HAVING SUM(aantal) > 100
+
+
+OPPDRACHT 52
+
+SELECT klantnr, COUNT(ordernr) AS aantal_orders, SUM(orderbedrag) AS totaal_orderbedrag
+FROM verkooporders
+GROUP BY klantnr
+HAVING aantal_orders > 6 AND totaal_orderbedrag > 50000
+ORDER BY totaal_orderbedrag DESC
